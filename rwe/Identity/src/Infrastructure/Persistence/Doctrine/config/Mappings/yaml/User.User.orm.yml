@@ -1,0 +1,20 @@
+Identity\Domain\Model\User\User:
+  type: entity
+  id:
+    userId:
+      column: id
+      type: user_id
+  table: rwe_identity_user
+  repositoryClass: Identity\Infrastructure\Persistence\Doctrine\User\DoctrineUserRepository
+  fields:
+    email:
+      type: string
+    firstName:
+      column: 'first_name'
+      type: string
+      nullable: true
+    lastName:
+      column: 'last_name'
+      type: string
+      nullable: true
+

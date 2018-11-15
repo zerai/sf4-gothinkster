@@ -3,7 +3,7 @@
 
 Repository di testing/discovery per la nuova versione di Symfony e nuovi componenti.
 
-Il dominio dell'applicazione si basa sulle specifiche del progetto ['Real World Example']('https://github.com/gothinkster/realworld'),
+Il dominio dell'applicazione si basa sulle specifiche del progetto [Real World Example](https://github.com/gothinkster/realworld),
 specifiche usate esclusivamente come linee guida e/o feature da implementare in caso di attinenza con la reale TODO list del repo.
 
 
@@ -27,6 +27,8 @@ specifiche usate esclusivamente come linee guida e/o feature da implementare in 
 - implementare serviceBus solo con sf-m
   - CommandBus command pattern
   - EventBus
+  - QueryBus
+  - Advanced xBus (middleware)
   
 
 ### Symfony/workflow a.k.a sf-w

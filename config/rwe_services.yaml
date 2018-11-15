@@ -20,6 +20,25 @@ services:
         alias: 'identity.repository_doctrine'
         public: true
 
+    user.repository:
+        #alias: 'user.repository_in_memory'
+        alias: 'Identity\Infrastructure\Persistence\Doctrine\User\DoctrineUserRepository'
+        public: true
+
+
+
+    Identity\Domain\Model\Identity\IdentityRepository:
+        #alias: 'user.repository_in_memory'
+        alias: 'identity.repository_doctrine'
+        public: true
+
+
+    Identity\Domain\Model\User\UserRepository:
+        alias: 'Identity\Infrastructure\Persistence\Doctrine\User\DoctrineUserRepository'
+
+    Identity\Infrastructure\Persistence\Doctrine\User\DoctrineUserRepository: ~
+
+
     transaction.manager:
         alias: 'SharedKernel\Infrastructure\Persistence\Doctrine\DoctrineTransactionManager'
 
@@ -36,8 +55,21 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
+
+
+    #
+    #   APPLICATION SERVICES
+    #
+
     Identity\Application\IdentityService:
         arguments:
             - '@identity.repository'
             - '@transaction.manager'
         public: true
+
+    Identity\Application\UserService:
+        arguments:
+            #- '@Identity\Infrastructure\Persistence\Doctrine\User\DoctrineUserRepository'
+            - '@user.repository'
+            - '@transaction.manager'
+        #public: true

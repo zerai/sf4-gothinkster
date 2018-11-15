@@ -2,18 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\Command\Identity;
+namespace App\Command\User;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Identity\Application\UserService;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class IdentityCreateCommand extends ContainerAwareCommand
+class UserCreateCommand extends Command
 {
-    protected static $defaultName = 'identity:create';
+    protected static $defaultName = 'user:create';
+
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+
+        // you *must* call the parent constructor
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -37,11 +48,12 @@ class IdentityCreateCommand extends ContainerAwareCommand
             // ...
         }
 
-        $identityService = $this->getContainer()->get('Identity\Application\IdentityService');
+        //$identityService = $this->getContainer()->get('Identity\Application\IdentityService');
 
-        $newIdentityId = $identityService->NewIdentity('pluto', 'password_paperino');
+        echo 'start';
+        $newUserId = $this->userService->RegisterUser('fra@example.it');
 
-        $io->note(sprintf('New Identity with id: %s', $newIdentityId));
+        $io->note(sprintf('New Identity with id: %s', $newUserId));
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }
 }

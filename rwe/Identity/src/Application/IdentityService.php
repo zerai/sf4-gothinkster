@@ -8,7 +8,7 @@ use Identity\Domain\Model\Identity\Email;
 use Identity\Domain\Model\Identity\HashPassword;
 use Identity\Domain\Model\Identity\Identity;
 use Identity\Domain\Model\Identity\IdentityRepository;
-use SharedKernel\Domain\TransactionManager;
+use SharedKernel\Application\TransactionManager\TransactionManager;
 
 class IdentityService
 {
@@ -16,6 +16,7 @@ class IdentityService
      * @var IdentityRepository
      */
     private $identityRepository;
+
     /**
      * @var TransactionManager
      */

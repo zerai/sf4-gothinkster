@@ -8,6 +8,8 @@ Identity\Domain\Model\Identity\Identity:
   repositoryClass: Identity\Infrastructure\Persistence\Doctrine\Identity\DoctrineIdentityRepository
   fields:
     email:
-      type: string
+      type: email
     hashPassword:
       type: string
+
+

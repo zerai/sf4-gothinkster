@@ -9,7 +9,7 @@ interface TransactionManager
     /**
      * Begin transaction.
      */
-    public function begin(): void;
+    public function beginTransaction(): void;
 
     /**
      * Commit transaction.

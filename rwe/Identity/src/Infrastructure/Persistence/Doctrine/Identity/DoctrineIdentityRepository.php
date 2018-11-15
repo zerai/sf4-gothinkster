@@ -24,6 +24,28 @@ class DoctrineIdentityRepository extends ServiceEntityRepository implements Iden
     }
 
     /**
+     * List all identity.
+     *
+     * @return Identity[] List of all Identity
+     */
+    public function getAll(): array
+    {
+        // TODO: Implement getAll() method.
+        return $this->findAll();
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return Identity
+     */
+    public function ofEmail($email): Identity
+    {
+        // TODO: Implement getAll() method.
+        return $this->findOneBy(['email' => $email]);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getNextIdentityId(): IdentityId

@@ -12,9 +12,16 @@ class EmailTest extends TestCase
     /** @test */
     public function it_creates_email_from_string()
     {
-        $name = Email::fromString('foo');
-        $this->assertInstanceOf(Email::class, $name);
-        $this->assertNotEmpty($name->toString());
-        $this->assertSame('foo', $name->toString());
+        $email = Email::fromString('foo');
+
+        $this->assertInstanceOf(Email::class, $email);
+        $this->assertNotEmpty($email->toString());
+        $this->assertSame('foo', $email->toString());
+    }
+
+    /** @test */
+    public function it_can_be_compared()
+    {
+        self::markTestSkipped();
     }
 }

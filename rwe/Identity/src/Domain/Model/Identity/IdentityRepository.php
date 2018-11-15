@@ -14,6 +14,20 @@ interface IdentityRepository
     public function add(Identity $identity): void;
 
     /**
+     * List all identity.
+     *
+     * @return Identity[] List of all Identity
+     */
+    public function getAll(): array;
+
+    /**
+     * @param string $email
+     *
+     * @return Identity
+     */
+    public function ofEmail($email): Identity;
+
+    /**
      * @return IdentityId a unique, generated identity Id
      */
     public function getNextIdentityId(): IdentityId;

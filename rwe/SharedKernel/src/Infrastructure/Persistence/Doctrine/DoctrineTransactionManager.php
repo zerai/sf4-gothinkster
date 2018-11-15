@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SharedKernel\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\EntityManager;
-use SharedKernel\Domain\TransactionManager;
+use SharedKernel\Application\TransactionManager\TransactionManager;
 
 final class DoctrineTransactionManager implements TransactionManager
 {
