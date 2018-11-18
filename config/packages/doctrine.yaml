@@ -20,6 +20,7 @@ doctrine:
             identity_id: Identity\Infrastructure\Persistence\Doctrine\config\Type\IdentityIdDoctrineType
             email: Identity\Infrastructure\Persistence\Doctrine\config\Type\EmailDoctrineType
             user_id: \Identity\Infrastructure\Persistence\Doctrine\config\Type\UserIdDoctrineType
+            first_name: \Identity\Infrastructure\Persistence\Doctrine\config\Type\FirstNameDoctrineType
 
     orm:
         auto_generate_proxy_classes: true

@@ -44,9 +44,7 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
     }
 
     /**
-     * @param string $email
-     *
-     * @return User|null
+     * {@inheritdoc}
      */
     public function ofEmail(string $email): ?User
     {
@@ -60,5 +58,13 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
     public function nextIdentity(): UserId
     {
         return UserId::generate();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function ofId(UserId $userId)
+    {
+        return $this->find($userId);
     }
 }

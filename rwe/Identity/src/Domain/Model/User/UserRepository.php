@@ -21,6 +21,13 @@ interface UserRepository
     public function getAll(): array;
 
     /**
+     * @param UserId $userId
+     *
+     * @return User
+     */
+    public function ofId(UserId $userId);
+
+    /**
      * @param string $email
      *
      * @return User|null

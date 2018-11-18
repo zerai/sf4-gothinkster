@@ -37,7 +37,7 @@ final class User
     /**
      * @return FirstName
      */
-    public function firsName(): FirstName
+    public function firstName(): ?FirstName
     {
         return $this->firstName;
     }

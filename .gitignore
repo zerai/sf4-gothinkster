@@ -12,6 +12,7 @@
 /.php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
 
-###> phpunit/phpunit ###
+###> symfony/phpunit-bridge ###
+.phpunit
 /phpunit.xml
-###< phpunit/phpunit ###
+###< symfony/phpunit-bridge ###

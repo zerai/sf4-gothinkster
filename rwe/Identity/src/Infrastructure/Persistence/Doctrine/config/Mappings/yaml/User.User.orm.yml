@@ -11,7 +11,7 @@ Identity\Domain\Model\User\User:
       type: string
     firstName:
       column: 'first_name'
-      type: string
+      type: 'first_name'
       nullable: true
     lastName:
       column: 'last_name'

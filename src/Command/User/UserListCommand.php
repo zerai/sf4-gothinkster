@@ -40,7 +40,7 @@ class UserListCommand extends Command
 
         $table = new Table($output);
         foreach ($users as &$user) {
-            $table->addRow([$user->userId()->toString(), $user->email()]);
+            $table->addRow([$user->userId(), $user->email(), $user->firstName()]);
         }
 
         $table->render();

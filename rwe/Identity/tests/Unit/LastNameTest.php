@@ -5,7 +5,7 @@ namespace Identity\Tests\Unit;
 class LastNameTest extends \PHPUnit\Framework\TestCase
 {
     /** @test */
-    public function it_can_generate_a_first_name_from_string()
+    public function it_can_generate_a_last_name_from_string()
     {
         self::markTestSkipped();
     }

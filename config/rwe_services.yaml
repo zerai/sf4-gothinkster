@@ -73,3 +73,15 @@ services:
             - '@user.repository'
             - '@transaction.manager'
         #public: true
+
+
+    #
+    #   COMMAND BUS
+    #
+
+    Identity\Domain\Model\User\Command\Handler\NotifyConfirmMessageForNewUserRegistrationHandler:
+        #tags: ['messenger.message_handler']
+        tags: [messenger.message_handler]
+
+    Identity\Domain\Model\User\Command\Handler\SmsNotificationHandler:
+        tags: ['messenger.message_handler']
