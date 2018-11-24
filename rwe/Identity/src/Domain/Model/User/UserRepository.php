@@ -38,4 +38,11 @@ interface UserRepository
      * @return UserId a unique, generated user Id
      */
     public function nextIdentity(): UserId;
+
+    /**
+     * Saves given user.
+     *
+     * @param User $user User to save
+     */
+    public function save(User $user): void;
 }

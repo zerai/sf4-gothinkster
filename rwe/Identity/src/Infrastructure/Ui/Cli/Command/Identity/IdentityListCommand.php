@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command\Identity;
+namespace Identity\Infrastructure\Ui\Cli\Command\Identity;
 
 use Identity\Domain\Model\Identity\IdentityRepository;
 use Psr\Log\LoggerInterface;
@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class IdentityListCommand extends Command
 {
-    protected static $defaultName = 'identity:list';
+    protected static $defaultName = 'rwe:identity:list';
 
     private $logger;
 

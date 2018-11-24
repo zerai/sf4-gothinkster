@@ -29,7 +29,7 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
         //$this->getEntityManager()->persist($user);
         //$this->getEntityManager()->flush($user);
         $this->_em->persist($user);
-        $this->_em->flush($user);
+        //$this->_em->flush($user);
     }
 
     /**
@@ -66,5 +66,16 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
     public function ofId(UserId $userId)
     {
         return $this->find($userId);
+    }
+
+    /**
+     * Saves given user.
+     *
+     * @param User $user User to save
+     */
+    public function save(User $user): void
+    {
+        $this->_em->persist($user);
+        //$this->_em->flush($user);
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command\Identity;
+namespace Identity\Infrastructure\Ui\Cli\Command\Identity;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class IdentityCreateCommand extends ContainerAwareCommand
 {
-    protected static $defaultName = 'identity:create';
+    protected static $defaultName = 'rwe:identity:create';
 
     protected function configure()
     {

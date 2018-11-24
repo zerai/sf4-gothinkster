@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command\Fake;
+namespace Identity\Infrastructure\Ui\Cli\Command\Fake;
 
 use Identity\Domain\Model\User\Command\NotifyConfirmMessageForNewUserRegistration;
 use Identity\Domain\Model\User\Command\SmsNotificationCommand;
@@ -17,7 +17,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class FakeSyncMessageCommand extends Command
 {
-    protected static $defaultName = 'fake:sync-message';
+    protected static $defaultName = 'rwe:fake:sync-message';
 
     private $logger;
 

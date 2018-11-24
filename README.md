@@ -12,9 +12,12 @@ specifiche usate esclusivamente come linee guida e/o feature da implementare in 
 
 # TODO Testing (Concept/pattern/implementazioni)
 
-- Value Object with Identity (write side)
-- Value Object compositi implementare persistenza multifield
+- Value Object with Identity (write side).
+- Value Object compositi implementare persistenza multifield.
+- Transational Application services (limitare boundary leaky InfraInApp).
+- sperimentare command pattern direttamente sotto transazione.
 - Separare la conf. doctrine da Sf "per quanto possibile"(goal: Riuso/Scorporo Servizi, Bounded Context, o altro Framework)
+- Separare file di conf per buonded context. (...long term try microservice)
 
 
 

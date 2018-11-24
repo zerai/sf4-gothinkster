@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Command\User;
+namespace Identity\Infrastructure\Ui\Cli\Command\Fake;
 
-use Identity\Application\UserService;
+use Identity\Application\Service\User\FakeUseCaseRequest;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,15 +12,15 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class UserCreateCommand extends Command
+class FakeTxServiceCommand extends Command
 {
-    protected static $defaultName = 'user:create';
+    protected static $defaultName = 'rwe:fake:tx-service';
 
-    private $userService;
+    private $fakeUseCaseService;
 
-    public function __construct(UserService $userService)
+    public function __construct($applicationService)
     {
-        $this->userService = $userService;
+        $this->fakeUseCaseService = $applicationService;
 
         // you *must* call the parent constructor
         parent::__construct();
@@ -48,12 +48,11 @@ class UserCreateCommand extends Command
             // ...
         }
 
-        //$identityService = $this->getContainer()->get('Identity\Application\IdentityService');
+        $result = $this->fakeUseCaseService->execute(
+           new FakeUseCaseRequest('8639ff23-87e9-42e5-a7a7-ed139e4dac18', 'zero first name')
+        );
 
-        echo 'start';
-        $newUserId = $this->userService->RegisterUser('fra@example.it');
-
-        $io->note(sprintf('New Identity with id: %s', $newUserId));
+        $io->note(sprintf('Notified message to: %s', $result));
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }
 }

@@ -11,7 +11,7 @@ use Identity\Domain\Model\User\UserId;
 use Identity\Domain\Model\User\UserRepository;
 use SharedKernel\Application\TransactionManager\TransactionManager;
 
-class UserService
+class OldUserService
 {
     /**
      * @var UserRepository

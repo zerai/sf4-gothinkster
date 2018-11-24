@@ -6,6 +6,7 @@
         "ext-amqp": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "carlosbuenosvinos/ddd": "^1.6",
         "enqueue/amqp-ext": "^0.8.40",
         "enqueue/messenger-adapter": "^0.1.2",
         "ramsey/uuid": "^3.8",
