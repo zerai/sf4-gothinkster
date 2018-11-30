@@ -18,7 +18,7 @@ class FakeUseCaseService implements ApplicationService
     /**
      * FakeUseCaseService constructor.
      *
-     * @param $userRepository
+     * @param UserRepository $userRepository
      */
     public function __construct(UserRepository $userRepository)
     {

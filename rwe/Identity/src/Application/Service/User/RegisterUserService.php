@@ -15,11 +15,6 @@ class RegisterUserService implements ApplicationService
     /** @var UserRepository */
     private $userRepository;
 
-    /**
-     * RegisterUserService constructor.
-     *
-     * @param $userRepository
-     */
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;

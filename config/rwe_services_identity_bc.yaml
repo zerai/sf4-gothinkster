@@ -14,8 +14,19 @@ services:
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
 
+        bind:
+            #$commandBus:  '@messenger.bus.commands'
+            $eventBus:    '@messenger.bus.events'
 
+    SharedKernel\Infrastructure\EventStore\Plugin\EventStoreMessengerPlugin:
+        #arguments:
+            #- '@messenger.bus.events'
+        tags:
+            - { name: 'prooph_event_store.plugin' }
 
+    messenger.middleware.event_store_messages:
+        class: Identity\Infrastructure\MessageBus\Messenger\Middleware\EventStore\ProophEventStoreMiddleware
+        arguments: ['@app.event_store.default']
 
     #
     # Identity Ar
@@ -72,27 +83,64 @@ services:
             - '@transaction.manager'
         public: true
 
-    Identity\Application\UserService:
-        arguments:
-            #- '@Identity\Infrastructure\Persistence\Doctrine\User\DoctrineUserRepository'
-            - '@user.repository'
-            - '@transaction.manager'
-        #public: true
+#    Identity\Application\UserService:
+#        arguments:
+#            #- '@Identity\Infrastructure\Persistence\Doctrine\User\DoctrineUserRepository'
+#            - '@user.repository'
+#            - '@transaction.manager'
+#        #public: true
 
 
     #
     #   COMMAND BUS
     #
-
-    Identity\Domain\Model\User\Command\Handler\NotifyConfirmMessageForNewUserRegistrationHandler:
-        #tags: ['messenger.message_handler']
-        tags: [messenger.message_handler]
-
     Identity\Domain\Model\User\Command\Handler\SmsNotificationHandler:
-        tags: ['messenger.message_handler']
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.commands' }
+
+    Identity\Domain\Model\User\Command\Handler\SyncSmsNotificationHandler:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.commands' }
+
+    Identity\Domain\Model\User\Command\Handler\AsyncSmsNotificationHandler:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.commands' }
+
+
+    Identity\Domain\Model\User\Command\Handler\SleepMessageHandler:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.commands' }
+
+
+    #'Identity\Domain\Model\User\Event\SmsNotificationWasSent':
+        #tags: ['messenger.message_handler']
+        #tags:
+            #- { name: 'messenger.message_handler', bus: 'messenger.bus.events' }
 
 
 
+
+    #
+    #   EVENT BUS -> PROCESS
+    #
+    Identity\Domain\Model\User\Process\SyncReactOnEvent:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.events' }
+
+    Identity\Domain\Model\User\Process\AsyncReactOnEvent:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.events' }
+
+    Identity\Domain\Model\User\Process\AsyncReactOnProophEvent:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.events' }
 
 
 
@@ -126,7 +174,7 @@ services:
         arguments:
             - '@Identity\Application\Service\User\FakeUseCaseService'
             - '@transactional.session'
-        public: true
+        #public: true
 
 
 

@@ -36,3 +36,19 @@ services:
     # Domain Event Stuff
     #
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+#    SharedKernel\Infrastructure\EventStore\Plugin\EventStoreMessengerPlugin:
+#        tags:
+#            - { name: 'prooph_event_store.plugin' }

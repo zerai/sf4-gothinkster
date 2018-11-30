@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Identity\Infrastructure\Ui\Cli\Command\Fake;
 
-use Identity\Domain\Model\User\Command\SleepMessage;
-use Identity\Domain\Model\User\Command\SmsNotificationCommand;
+use Identity\Domain\Model\User\Event\FakeWasRegister;
+use Identity\Domain\Model\User\Event\SmsNotificationWasSent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,18 +15,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class FakeSyncMessageCommand extends Command
+class FakeAsyncEventMessageCommand extends Command
 {
-    protected static $defaultName = 'rwe:fake:sync-message';
+    protected static $defaultName = 'rwe:fake:async-event-message';
 
     private $logger;
 
-    private $commandBus;
+    private $eventBus;
 
-    public function __construct(LoggerInterface $logger, MessageBusInterface $commandBus)
+    public function __construct(LoggerInterface $logger, MessageBusInterface $eventBus)
     {
         $this->logger = $logger;
-        $this->commandBus = $commandBus;
+        $this->eventBus = $eventBus;
 
         // you *must* call the parent constructor
         parent::__construct();
@@ -54,12 +54,9 @@ class FakeSyncMessageCommand extends Command
             // ...
         }
 
-        $result = $this->commandBus->dispatch(
-            // this ok
-            //new SleepMessage(15, 'Hello World')
-
-            // this ok
-            new SmsNotificationCommand('my sms message')
+        $result = $this->eventBus->dispatch(
+            new SmsNotificationWasSent('prova')
+            //FakeWasRegister::with('zero', 'zero@example.it')
         );
 
         $io->note(sprintf('Notified message to: %s', $result));

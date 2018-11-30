@@ -1,14 +1,63 @@
 framework:
+      # first test ok
+#    messenger:
+#        transports:
+#            # Uncomment the following line to enable a transport named "amqp"
+#            # amqp: '%env(MESSENGER_TRANSPORT_DSN)%'
+#            #amqp: '%env(MESSENGER_TRANSPORT_DSN)%'
+#            amqp: enqueue://default
+#
+#        routing:
+#            # Route your messages to the transports
+#            # 'App\Message\YourMessage': amqp
+
+
     messenger:
+        # The bus that is going to be injected when injecting MessageBusInterface:
+        default_bus: messenger.bus.commands
+
+        # Create buses
+        buses:
+            messenger.bus.commands:
+                middleware:
+                    #- messenger.middleware.logging
+                    - 'messenger.bus.commands.middleware.logging'
+                    #- App\Messenger\CommandEnricherMiddleware
+            messenger.bus.events:
+                middleware:
+                    - 'messenger.middleware.logging'
+                    - 'messenger.middleware.event_store_messages'
+                    - 'messenger.middleware.allow_no_handler'
+
         transports:
             # Uncomment the following line to enable a transport named "amqp"
-            # amqp: '%env(MESSENGER_TRANSPORT_DSN)%'
             #amqp: '%env(MESSENGER_TRANSPORT_DSN)%'
             amqp: enqueue://default
 
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': amqp
-            'Identity\Domain\Model\User\Command\NotifyConfirmMessageForNewUserRegistration': amqp
 
-            'Identity\Domain\Model\User\Command\SmsNotificationCommand': amqp
+
+        #
+        #   Async Command
+        #
+
+
+        #
+        #   Async Event -> Process
+        #
+
+
+        #
+        #   Test bus
+        #
+            #Identity\Domain\Model\User\Event\SmsNotificationWasSent:
+                #senders: ['amqp']
+                #send_and_handle: false
+
+            #'*': ['amqp']
+
+
+            'Identity\Domain\Model\User\Command\AsyncSmsNotificationCommand': ['amqp']
+            'Identity\Domain\Model\User\Event\FakeWasRegister': ['amqp']

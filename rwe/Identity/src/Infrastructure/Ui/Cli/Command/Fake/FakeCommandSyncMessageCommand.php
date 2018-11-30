@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Identity\Infrastructure\Ui\Cli\Command\Fake;
 
-use Identity\Domain\Model\User\Command\SleepMessage;
-use Identity\Domain\Model\User\Command\SmsNotificationCommand;
+use Identity\Domain\Model\User\Command\RegisterPippo;
+use Identity\Domain\Model\User\Command\SyncSmsNotificationCommand;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,9 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class FakeSyncMessageCommand extends Command
+class FakeCommandSyncMessageCommand extends Command
 {
-    protected static $defaultName = 'rwe:fake:sync-message';
+    protected static $defaultName = 'rwe:fake:sync-command';
 
     private $logger;
 
@@ -55,11 +55,8 @@ class FakeSyncMessageCommand extends Command
         }
 
         $result = $this->commandBus->dispatch(
-            // this ok
-            //new SleepMessage(15, 'Hello World')
-
-            // this ok
-            new SmsNotificationCommand('my sms message')
+            new SyncSmsNotificationCommand('my sms notify')
+             //RegisterPippo::with('my name')
         );
 
         $io->note(sprintf('Notified message to: %s', $result));

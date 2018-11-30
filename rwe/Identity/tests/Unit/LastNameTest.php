@@ -2,7 +2,9 @@
 
 namespace Identity\Tests\Unit;
 
-class LastNameTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class LastNameTest extends TestCase
 {
     /** @test */
     public function it_can_generate_a_last_name_from_string()

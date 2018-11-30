@@ -14,6 +14,9 @@ services:
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
 
+        bind:
+            $commandBus:  '@messenger.bus.commands'
+            $eventBus:    '@messenger.bus.events'
 
     Identity\Infrastructure\Ui\Cli\Command\Fake\:
         resource: '../rwe/Identity/src/Infrastructure/Ui/Cli/Command/Fake/'
@@ -27,6 +30,12 @@ services:
         resource: '../rwe/Identity/src/Infrastructure/Ui/Cli/Command/User/'
         tags: ['console.command']
 
+
+    Identity\Infrastructure\Ui\Cli\Command\CreateEventStreamCommand:
+        #arguments:
+            #$applicationService: '@Identity\Application\Service\User\TransationalFakeUseCaseService'
+        tags:
+            - { name: 'console.command', command: 'rwe:event-stream-identity:create' }
 
     Identity\Infrastructure\Ui\Cli\Command\Fake\FakeTxServiceCommand:
         #autowire: false

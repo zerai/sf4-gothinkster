@@ -4,29 +4,26 @@ declare(strict_types=1);
 
 namespace Identity\Infrastructure\Ui\Cli\Command\Fake;
 
-use Identity\Domain\Model\User\Command\SleepMessage;
-use Identity\Domain\Model\User\Command\SmsNotificationCommand;
-use Psr\Log\LoggerInterface;
+use Identity\Domain\Model\User\Event\AsyncSmsNotificationWasSent;
+use Identity\Infrastructure\Ui\Cli\Command\Fake\Event\QuickStartSucceeded;
+use Prooph\EventStore\EventStore;
+use Prooph\EventStore\StreamName;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Messenger\MessageBusInterface;
 
-class FakeSyncMessageCommand extends Command
+class FakeEventStoreCommand extends Command
 {
-    protected static $defaultName = 'rwe:fake:sync-message';
+    protected static $defaultName = 'rwe:fake:event-store';
 
-    private $logger;
+    private $eventStore;
 
-    private $commandBus;
-
-    public function __construct(LoggerInterface $logger, MessageBusInterface $commandBus)
+    public function __construct(EventStore $eventStore)
     {
-        $this->logger = $logger;
-        $this->commandBus = $commandBus;
+        $this->eventStore = $eventStore;
 
         // you *must* call the parent constructor
         parent::__construct();
@@ -54,15 +51,15 @@ class FakeSyncMessageCommand extends Command
             // ...
         }
 
-        $result = $this->commandBus->dispatch(
-            // this ok
-            //new SleepMessage(15, 'Hello World')
+        $events[] = QuickStartSucceeded::withSuccessMessage('fake test');
+        //$events[]= new AsyncSmsNotificationWasSent("From eventStore my async sms notify EVENT");
 
-            // this ok
-            new SmsNotificationCommand('my sms message')
+        $this->eventStore->appendTo(
+            new StreamName('event_stream'),
+            new \ArrayIterator($events)
         );
 
-        $io->note(sprintf('Notified message to: %s', $result));
+        //$io->note(sprintf('Notified message to: %s', $result));
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }
 }

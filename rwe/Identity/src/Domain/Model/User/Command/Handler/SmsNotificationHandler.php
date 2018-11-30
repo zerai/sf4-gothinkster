@@ -8,6 +8,8 @@ class SmsNotificationHandler
 {
     public function __invoke(SmsNotificationCommand $message)
     {
+        echo $message->getContent().PHP_EOL;
+
         return $message->getContent();
     }
 }

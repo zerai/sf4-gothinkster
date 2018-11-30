@@ -9,6 +9,8 @@
         "carlosbuenosvinos/ddd": "^1.6",
         "enqueue/amqp-ext": "^0.8.40",
         "enqueue/messenger-adapter": "^0.1.2",
+        "prooph/event-store-symfony-bundle": "^0.5.0",
+        "prooph/pdo-event-store": "^1.10",
         "ramsey/uuid": "^3.8",
         "ramsey/uuid-doctrine": "^1.5",
         "symfony/amqp-pack": "^1.0",

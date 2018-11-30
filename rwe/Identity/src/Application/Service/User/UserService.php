@@ -27,7 +27,7 @@ abstract class UserService implements ApplicationService
     }
 
     /**
-     * @param $userId
+     * @param string $userId
      *
      * @return \Identity\Domain\Model\User\User
      *
@@ -35,8 +35,13 @@ abstract class UserService implements ApplicationService
      */
     protected function findUserOrFail($userId)
     {
-        $user = $this->userRepository->ofId(UserId::fromString($userId));
-        if (null === $user) {
+//        $user = $this->userRepository->ofId(UserId::fromString($userId));
+//        if (null === $user) {
+//            throw new UserDoesNotExistException();
+//        }
+
+        //TODO: check
+        if (!$user = $this->userRepository->ofId(UserId::fromString($userId))) {
             throw new UserDoesNotExistException();
         }
 

@@ -15,10 +15,10 @@ class ChangePasswordUserRequest
     /**
      * ChangePasswordUserRequest constructor.
      *
-     * @param $userId
-     * @param $plainPassword
+     * @param string $userId
+     * @param string $plainPassword
      */
-    public function __construct($userId, $plainPassword)
+    public function __construct(string $userId, string $plainPassword)
     {
         $this->userId = $userId;
         $this->plainPassword = $plainPassword;

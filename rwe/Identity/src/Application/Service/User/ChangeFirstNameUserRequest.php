@@ -15,10 +15,10 @@ class ChangeFirstNameUserRequest
     /**
      * ChangePasswordUserRequest constructor.
      *
-     * @param $userId
-     * @param $firstName
+     * @param string $userId
+     * @param string $firstName
      */
-    public function __construct($userId, $firstName)
+    public function __construct(string $userId, string $firstName)
     {
         $this->userId = $userId;
         $this->firstName = $firstName;
