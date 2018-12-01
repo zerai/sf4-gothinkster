@@ -183,6 +183,7 @@ services:
     Identity\Application\Service\User\RegisterUserService:
         arguments:
             - '@user.repository'
+            - '@Identity\Infrastructure\Domain\Service\ChecksUniqueUsersEmail'
     Identity\Application\Service\User\TransationalRegisterUserService:
         factory: 'Identity\Infrastructure\Application\Service\TransationalApplicationFactory:createTransationalApplication'
         arguments:
@@ -220,3 +221,9 @@ services:
 #        arguments:
 #            - '@Identity\Application\Service\User\ChangePasswordUserService'
 #            - '@transactional.session'
+
+
+
+    Identity\Infrastructure\Domain\Service\ChecksUniqueUsersEmail:
+        arguments:
+            - '@user.repository'

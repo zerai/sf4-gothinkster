@@ -5,11 +5,22 @@ declare(strict_types=1);
 namespace Identity\Infrastructure\Persistence\Doctrine\User;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Identity\Domain\Model\User\Email;
 use Identity\Domain\Model\User\User;
 use Identity\Domain\Model\User\UserId;
 use Identity\Domain\Model\User\UserRepository;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+/**
+ * @method User|null find($id, $lockMode = null, $lockVersion = null)
+ * @method User|null findOneBy(array $criteria, array $orderBy = null)
+ * @method User[]    findAll()
+ * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method User|null findOneByUuid(UuidInterface|UserId $uuid, array $orderBy = null)
+ * @method User[]    findByUuid(UuidInterface|UserId $uuid, array $orderBy = null)
+ * @method User|null findOneByEmail(Email $email, array $orderBy = null)
+ */
 class DoctrineUserRepository extends ServiceEntityRepository implements UserRepository
 {
     public function __construct(RegistryInterface $registry)
