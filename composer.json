@@ -3,18 +3,34 @@
     "license": "proprietary",
     "require": {
         "php": "^7.1.3",
+
+        "ext-amqp": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "carlosbuenosvinos/ddd": "^1.6",
+        "enqueue/amqp-ext": "^0.8.40",
+        "enqueue/messenger-adapter": "^0.1.2",
+        "prooph/event-store-symfony-bundle": "^0.5.0",
+        "prooph/pdo-event-store": "^1.10",
         "ramsey/uuid": "^3.8",
         "ramsey/uuid-doctrine": "^1.5",
+        "symfony/amqp-pack": "^1.0",
         "symfony/console": "4.1.*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "4.1.*",
+        "symfony/messenger": "4.1.*",
+
         "symfony/orm-pack": "^1.0",
         "symfony/yaml": "4.1.*"
     },
     "require-dev": {
-        "symfony/dotenv": "4.1.*"
+
+        "friendsofphp/php-cs-fixer": "^2.13",
+        "phpstan/phpstan": "^0.10.5",
+        "prolic/fpp": "dev-master",
+        "roave/security-advisories": "dev-master",
+        "symfony/dotenv": "4.1.*",
+        "symfony/test-pack": "^1.0"
     },
     "config": {
         "preferred-install": {
@@ -26,12 +42,15 @@
         "psr-4": {
             "App\\": "src/",
             "SharedKernel\\": "rwe/SharedKernel/src",
-            "Identity\\": "rwe/Identity/src"
+            "Identity\\": "rwe/Identity/src",
+            "Member\\": "rwe/Member/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "App\\Tests\\": "tests/",
+            "Identity\\Tests\\": "rwe/Identity/tests",
+            "Member\\Tests\\": "rwe/Member/tests"
         }
     },
     "replace": {

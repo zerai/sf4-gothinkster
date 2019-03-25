@@ -1,0 +1,31 @@
+language: php
+
+php:
+  - 7.2
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+
+
+before_script:
+  - composer install --optimize-autoloader --no-progress --ansi
+
+jobs:
+  include:
+    - stage: test
+      name: "phpunit"
+      script:
+        - ./vendor/bin/phpunit --coverage-clover clover.xml --log-junit junit.xml
+#        - ./cc-test-reporter after-build --coverage-input-type clover --id $CC_TEST_REPORTER_ID --exit-code $TRAVIS_TEST_RESULT
+#        - sonar-scanner
+
+
+#    - stage: test
+#      name: "code style"
+#      script: ./vendor/bin/php-cs-fixer fix src/ --dry-run --ansi
+#
+#    - stage: test
+#      name: "code static analysis"
+#      script: ./vendor/bin/phpstan analyse --ansi

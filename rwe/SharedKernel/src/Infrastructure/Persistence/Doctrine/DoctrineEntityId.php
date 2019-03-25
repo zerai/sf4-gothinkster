@@ -20,4 +20,5 @@ class DoctrineEntityId extends GuidType
 
         return new $className($value);
     }
+
 }

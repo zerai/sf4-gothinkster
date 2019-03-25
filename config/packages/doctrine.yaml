@@ -16,6 +16,16 @@ doctrine:
             collate: utf8mb4_unicode_ci
 
         url: '%env(resolve:DATABASE_URL)%'
+        types:
+            identity_id: Identity\Infrastructure\Persistence\Doctrine\config\Type\IdentityIdDoctrineType
+            email: Identity\Infrastructure\Persistence\Doctrine\config\Type\EmailDoctrineType
+            user_id: \Identity\Infrastructure\Persistence\Doctrine\config\Type\UserIdDoctrineType
+            first_name: \Identity\Infrastructure\Persistence\Doctrine\config\Type\FirstNameDoctrineType
+
+            #Member BC
+            user_relation_id: \Member\Infrastructure\Persistence\Doctrine\config\Type\UserIdDoctrineType
+
+
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -27,3 +37,18 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+
+            Identity:
+                is_bundle: false
+                type: yml
+                dir: '%kernel.project_dir%/rwe/Identity/src/Infrastructure/Persistence/Doctrine/config/Mappings/yaml'
+                #prefix: 'Identity\Domain\Model\Identity'
+                prefix: 'Identity\Domain\Model'
+                alias: Identity
+            Member:
+                is_bundle: false
+                type: yml
+                dir: '%kernel.project_dir%/rwe/Member/src/Infrastructure/Persistence/Doctrine/config/Mappings/yaml'
+                prefix: 'Member\Domain\Model'
+                alias: Member
+

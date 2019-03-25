@@ -1,0 +1,15 @@
+Identity\Domain\Model\Identity\Identity:
+  type: entity
+  id:
+    identityId:
+      column: id
+      type: identity_id
+  table: rwe_identity_identity
+  repositoryClass: Identity\Infrastructure\Persistence\Doctrine\Identity\DoctrineIdentityRepository
+  fields:
+    email:
+      type: email
+    hashPassword:
+      type: string
+
+

@@ -1,0 +1,229 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+        bind:
+            #$commandBus:  '@messenger.bus.commands'
+            $eventBus:    '@messenger.bus.events'
+
+    SharedKernel\Infrastructure\EventStore\Plugin\EventStoreMessengerPlugin:
+        #arguments:
+            #- '@messenger.bus.events'
+        tags:
+            - { name: 'prooph_event_store.plugin' }
+
+    messenger.middleware.event_store_messages:
+        class: Identity\Infrastructure\MessageBus\Messenger\Middleware\EventStore\ProophEventStoreMiddleware
+        arguments: ['@app.event_store.default']
+
+    #
+    # Identity Ar
+    #
+    identity.repository:
+        alias: 'identity.repository_doctrine' # OR  'identity.repository_in_memory' | identity.repository_redis
+        public: true
+
+    Identity\Domain\Model\Identity\IdentityRepository:
+        #alias: 'user.repository_in_memory'
+        alias: 'identity.repository_doctrine'
+        public: true
+
+    identity.repository_doctrine:
+        class: 'Identity\Infrastructure\Persistence\Doctrine\Identity\DoctrineIdentityRepository'
+    #identity.repository_in_memory:
+        #class: 'Identity\Infrastructure\Persistence\InMemory\Identity\InMemoryIdentityRepository'
+
+
+
+
+    #
+    # Identity Ar
+    #
+    user.repository:
+        alias: 'Identity\Infrastructure\Persistence\Doctrine\User\DoctrineUserRepository' # OR  'user.repository_in_memory' | 'user.repository_redis'
+        public: true
+
+    Identity\Infrastructure\Persistence\Doctrine\User\DoctrineUserRepository: ~
+
+    # serve allo user list per ora.... creare i rispettivi view service da iniettare nei controller e cli-command
+    Identity\Domain\Model\User\UserRepository:
+        alias: 'Identity\Infrastructure\Persistence\Doctrine\User\DoctrineUserRepository'
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #
+    #   APPLICATION SERVICES
+    #
+
+    Identity\Application\IdentityService:
+        arguments:
+            - '@identity.repository'
+            - '@transaction.manager'
+        public: true
+
+#    Identity\Application\UserService:
+#        arguments:
+#            #- '@Identity\Infrastructure\Persistence\Doctrine\User\DoctrineUserRepository'
+#            - '@user.repository'
+#            - '@transaction.manager'
+#        #public: true
+
+
+    #
+    #   COMMAND BUS
+    #
+    Identity\Domain\Model\User\Command\Handler\SmsNotificationHandler:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.commands' }
+
+    Identity\Domain\Model\User\Command\Handler\SyncSmsNotificationHandler:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.commands' }
+
+    Identity\Domain\Model\User\Command\Handler\AsyncSmsNotificationHandler:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.commands' }
+
+
+    Identity\Domain\Model\User\Command\Handler\SleepMessageHandler:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.commands' }
+
+
+    #'Identity\Domain\Model\User\Event\SmsNotificationWasSent':
+        #tags: ['messenger.message_handler']
+        #tags:
+            #- { name: 'messenger.message_handler', bus: 'messenger.bus.events' }
+
+
+
+
+    #
+    #   EVENT BUS -> PROCESS
+    #
+    Identity\Domain\Model\User\Process\SyncReactOnEvent:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.events' }
+
+    Identity\Domain\Model\User\Process\AsyncReactOnEvent:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.events' }
+
+    Identity\Domain\Model\User\Process\AsyncReactOnProophEvent:
+        #tags: ['messenger.message_handler']
+        tags:
+            - { name: 'messenger.message_handler', bus: 'messenger.bus.events' }
+
+
+
+
+
+    #
+    # Application Services - (only for read side)
+    #
+    # UseCase Application Service
+    #
+
+    Identity\Application\Service\User\ViewUserService: ~
+    Identity\Application\Service\User\ViewAllUsersService: ~
+
+
+
+
+
+    #
+    # Transactional Application Services - (only for write side)
+    #
+    # UseCase Application Service + Tx version
+    #
+
+    # UseCase - FakeUseCase
+    Identity\Application\Service\User\FakeUseCaseService:
+        arguments:
+            - '@user.repository'
+    Identity\Application\Service\User\TransationalFakeUseCaseService:
+        factory: 'Identity\Infrastructure\Application\Service\TransationalApplicationFactory:createTransationalApplication'
+        arguments:
+            - '@Identity\Application\Service\User\FakeUseCaseService'
+            - '@transactional.session'
+        #public: true
+
+
+
+
+    # UseCase - RegisterUser
+    Identity\Application\Service\User\RegisterUserService:
+        arguments:
+            - '@user.repository'
+            - '@Identity\Infrastructure\Domain\Service\ChecksUniqueUsersEmail'
+    Identity\Application\Service\User\TransationalRegisterUserService:
+        factory: 'Identity\Infrastructure\Application\Service\TransationalApplicationFactory:createTransationalApplication'
+        arguments:
+            - '@Identity\Application\Service\User\RegisterUserService'
+            - '@transactional.session'
+
+
+
+
+    # UseCase - ChangeFirstName
+    Identity\Application\Service\User\ChangeFirstNameUserService:
+        arguments:
+            - '@user.repository'
+    Identity\Application\Service\User\TransationalChangeFirstNameUserService:
+        factory: 'Identity\Infrastructure\Application\Service\TransationalApplicationFactory:createTransationalApplication'
+        arguments:
+            - '@Identity\Application\Service\User\ChangeFirstNameUserService'
+            - '@transactional.session'
+
+
+
+
+
+
+
+
+#   TODO
+
+#    # UseCase - ChangePassword
+#    Identity\Application\Service\User\ChangePasswordUserService:
+#        arguments:
+#            - '@user.repository'
+#    Identity\Application\Service\User\TransationalChangePasswordUserService:
+#        factory: 'Identity\Infrastructure\Application\Service\TransationalApplicationFactory:createTransationalApplication'
+#        arguments:
+#            - '@Identity\Application\Service\User\ChangePasswordUserService'
+#            - '@transactional.session'
+
+
+
+    Identity\Infrastructure\Domain\Service\ChecksUniqueUsersEmail:
+        arguments:
+            - '@user.repository'

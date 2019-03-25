@@ -1,0 +1,8 @@
+imports:
+  - { resource: 'rwe_services_shared_kernel_bc.yaml' }
+  - { resource: 'rwe_services_identity_bc.yaml' }
+  - { resource: 'rwe_services_identity_bc_cli.yaml' }
+
+  - { resource: 'rwe_services_member_bc.yaml' }
+  - { resource: 'rwe_services_member_bc_cli.yaml' }
+

@@ -1,0 +1,14 @@
+prooph_event_store:
+    stores:
+        default:
+            event_store: 'app.event_store.default'
+        #identity:
+            #event_store: 'app.event_store.identity'
+        member:
+            event_store: 'app.event_store.member'
+
+services:
+    _defaults:
+        public: false
+
+    Prooph\EventSourcing\EventStoreIntegration\AggregateTranslator: ~
