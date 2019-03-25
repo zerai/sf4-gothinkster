@@ -25,6 +25,7 @@
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.10.5",
         "prolic/fpp": "dev-master",
+        "roave/security-advisories": "dev-master",
         "symfony/dotenv": "4.1.*",
         "symfony/test-pack": "^1.0"
     },
@@ -38,13 +39,15 @@
         "psr-4": {
             "App\\": "src/",
             "SharedKernel\\": "rwe/SharedKernel/src",
-            "Identity\\": "rwe/Identity/src"
+            "Identity\\": "rwe/Identity/src",
+            "Member\\": "rwe/Member/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "App\\Tests\\": "tests/",
-            "Identity\\Tests\\": "rwe/Identity/tests"
+            "Identity\\Tests\\": "rwe/Identity/tests",
+            "Member\\Tests\\": "rwe/Member/tests"
         }
     },
     "replace": {

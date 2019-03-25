@@ -26,8 +26,19 @@ framework:
             messenger.bus.events:
                 middleware:
                     - 'messenger.middleware.logging'
-                    - 'messenger.middleware.event_store_messages'
+                    #- 'messenger.middleware.event_store_messages'
                     - 'messenger.middleware.allow_no_handler'
+
+
+            member.messenger.bus.commands:
+                middleware:
+                    - 'messenger.bus.commands.middleware.logging'
+            member.messenger.bus.events:
+                middleware:
+                    - 'messenger.middleware.logging'
+                    - 'messenger.middleware.member.event_store_messages'
+                    - 'messenger.middleware.allow_no_handler'
+
 
         transports:
             # Uncomment the following line to enable a transport named "amqp"

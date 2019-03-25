@@ -1,0 +1,14 @@
+Member\Domain\Model\User\UserRelation:
+  type: entity
+  id:
+    userId:
+      column: user_id
+      type: user_relation_id
+  table: rwe_member_user_relation
+  repositoryClass: Member\Infrastructure\Persistence\Doctrine\UserRelation\DoctrineUserRelationRepository
+  fields:
+    following:
+      column: 'following'
+      type: simple_array
+      nullable: true
+

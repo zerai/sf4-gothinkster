@@ -1,0 +1,114 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+        bind:
+            #$commandBus:  '@messenger.bus.commands'
+            $eventBus:    '@member.messenger.bus.events'
+
+    messenger.middleware.member.event_store_messages:
+        class: Member\Infrastructure\MessageBus\Messenger\Middleware\EventStore\ProophEventStoreMiddleware
+        arguments: ['@app.event_store.member']
+
+    #
+    # UserRelation Ar
+    #
+    user.relation.repository:
+        alias: 'user.relation.repository_doctrine'   #| OR 'user.relation.repository_in_memory'
+        public: true
+
+    user.relation.repository_in_memory:
+        class: 'Member\Infrastructure\Persistence\InMemory\User\InMemoryUserRelationRepository'
+
+    user.relation.repository_doctrine:
+        #class: 'Member\Infrastructure\Persistence\Doctrine\UserRelation\DoctrineUserRelationRepository'
+        # prooph test
+        class: 'Member\Infrastructure\Persistence\Doctrine\UserRelation\ProophDoctrineUserRelationRepository'
+        arguments:
+            #- '@app.event_store.member'
+            $streamName: '@member.stream'
+
+
+    member.stream:
+        class: 'Prooph\EventStore\StreamName'
+        arguments:
+            - 'member-event_stream'
+
+
+
+
+
+    #
+    #   COMMAND BUS
+    #
+    #Identity\Domain\Model\User\Command\Handler\SmsNotificationHandler:
+        #tags: ['messenger.message_handler']
+        #tags:
+            #- { name: 'messenger.message_handler', bus: 'messenger.bus.commands' }
+
+
+
+
+
+    #
+    #   EVENT BUS -> PROCESS
+    #
+#    Identity\Domain\Model\User\Process\SyncReactOnEvent:
+#        #tags: ['messenger.message_handler']
+#        tags:
+#            - { name: 'messenger.message_handler', bus: 'member.messenger.bus.events' }
+
+
+
+
+
+
+    #
+    # Application Services - (only for read side)
+    #
+    # UseCase Application Service
+    #
+
+    #Identity\Application\Service\User\ViewUserService: ~
+    #Identity\Application\Service\User\ViewAllUsersService: ~
+
+
+
+
+
+    #
+    # Transactional Application Services - (only for write side)
+    #
+    # UseCase Application Service + Tx version
+    #
+
+
+
+
+    # UseCase - FollowUser
+    Member\Application\Service\FollowUserService:
+        arguments:
+            - '@user.relation.repository'
+
+    # UseCase - UnfollowUser
+    Member\Application\Service\UnfollowUserService:
+        arguments:
+            - '@user.relation.repository'
+
+    #Identity\Application\Service\User\TransationalRegisterUserService:
+        #factory: 'Identity\Infrastructure\Application\Service\TransationalApplicationFactory:createTransationalApplication'
+        #arguments:
+            #- '@Identity\Application\Service\User\RegisterUserService'
+            #- '@transactional.session'
