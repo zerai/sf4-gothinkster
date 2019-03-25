@@ -1,4 +1,5 @@
 {
+
     "beberlei/assert": {
         "version": "v3.1.0"
     },
@@ -175,6 +176,7 @@
     },
     "nikic/php-parser": {
         "version": "v4.1.0"
+
     },
     "ocramius/proxy-manager": {
         "version": "2.2.2"
@@ -242,6 +244,7 @@
     "psr/simple-cache": {
         "version": "1.0.1"
     },
+
     "queue-interop/amqp-interop": {
         "version": "0.7.5"
     },
@@ -260,6 +263,7 @@
             "ref": "f7895777cd673fcefbc321a9063077a24e5df646"
         }
     },
+
     "react/event-loop": {
         "version": "v0.4.3"
     },
@@ -281,6 +285,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "3.3",
+
             "ref": "181d766db0eb468f41337f9b2d9d5b61ba1ee441"
         }
     },

@@ -25,6 +25,7 @@ doctrine:
             #Member BC
             user_relation_id: \Member\Infrastructure\Persistence\Doctrine\config\Type\UserIdDoctrineType
 
+
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -36,6 +37,7 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+
             Identity:
                 is_bundle: false
                 type: yml
@@ -49,3 +51,4 @@ doctrine:
                 dir: '%kernel.project_dir%/rwe/Member/src/Infrastructure/Persistence/Doctrine/config/Mappings/yaml'
                 prefix: 'Member\Domain\Model'
                 alias: Member
+
