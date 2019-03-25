@@ -4,6 +4,8 @@ prooph_event_store:
             event_store: 'app.event_store.default'
         #identity:
             #event_store: 'app.event_store.identity'
+        member:
+            event_store: 'app.event_store.member'
 
 services:
     _defaults:

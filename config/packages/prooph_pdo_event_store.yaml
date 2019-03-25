@@ -18,6 +18,14 @@ services:
             - '@app.event_store.pdo_connection.mysql'
             - '@app.event_store.mysql.persistence_strategy'
 
+    app.event_store.member:
+        class: Prooph\EventStore\Pdo\MySqlEventStore
+        arguments:
+            - '@prooph_event_store.message_factory'
+            - '@app.event_store.pdo_connection.mysql'
+            - '@app.event_store.mysql.persistence_strategy'
+
+
 #    app.event_store.pdo_connection.mysql:
 #        class: \PDO
 #        arguments:
