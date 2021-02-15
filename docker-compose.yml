@@ -8,6 +8,8 @@ services:
     environment:
       WEB_DOCUMENT_ROOT: /app
       WEB_DOCUMENT_INDEX: public/index.php
+    ports:
+      - 80:80
     volumes:
       - .:/app
     depends_on:
